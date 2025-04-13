@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=movies
+      - DB_USER=postgres
+      - DB_PASS=postgres
+
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: movies
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
